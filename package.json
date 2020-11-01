@@ -7,8 +7,11 @@
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
     "@snowpack/app-scripts-react": "^1.11.0",
@@ -16,6 +19,7 @@
     "@testing-library/react": "^10.0.3",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
     "@types/snowpack-env": "^2.3.0",
     "jest": "^26.2.2",
     "prettier": "^2.0.5",
