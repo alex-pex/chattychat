@@ -1,38 +1,40 @@
 .App {
-  text-align: center;
+  width: 600px;
+  margin: 0 auto;
+  font-size: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Message-list {
+  list-style: none;
+  padding: 0;
+  max-height: 80vh;
+  overflow: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Message-item {
+  line-height: 1.5;
+  margin: 0.75em 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Message-author {
+  font-weight: 500;
+}
+.Message-author::after {
+  content: ':';
+}
+
+.Message-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
-.App-link {
-  color: #61dafb;
+.Message-input {
+  flex: 1;
+  border: none;
+  margin-right: 1px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Message-submit-button {
+  border: none;
 }
