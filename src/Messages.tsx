@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Messages.css';
 import { connect } from 'react-redux';
 import type { RootState } from './store';
 
 interface AppProps {
   messages?: string[];
+  postMessage: (v: string) => void;
 }
 
-export function App({ messages = [] }: AppProps) {
+export function App({ messages = [], postMessage }: AppProps) {
+  const [newMessage, setNewMessage] = useState('');
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    alert('submit!');
+
+    postMessage(newMessage);
+    setNewMessage('');
   };
 
   const filteredMessages = messages.reduce((acc, msg) => {
@@ -36,6 +40,8 @@ export function App({ messages = [] }: AppProps) {
           name="newMessage"
           placeholder="Type your message"
           autoFocus
+          value={newMessage}
+          onChange={(event) => setNewMessage(event.target.value)}
         />
         <button className="Message-submit-button" type="submit">
           Send
@@ -49,4 +55,8 @@ const mapStateToProps = (state: RootState) => ({
   messages: state.messages,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: any) => ({
+  postMessage: (value: string) => dispatch({ type: 'POST_MESSAGE', value }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
