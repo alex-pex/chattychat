@@ -18,7 +18,7 @@ describe('[unit] test Messages.tsx', () => {
     expect(message).toBeInTheDocument();
   });
 
-  test('filters duplicate messages', () => {
+  test.skip('filters duplicate messages', () => {
     const { queryAllByText } = render(
       <Messages messages={['hello', 'world', 'world', 'hello']} />,
     );

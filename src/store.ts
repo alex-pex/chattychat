@@ -11,6 +11,12 @@ export type RootState = typeof initialState;
 export const reducer = (state = initialState, action: Action) => {
   if (action.type === 'RESET') return initialState;
   if (action.type === 'POST_MESSAGE') {
+    if (
+      state.messages.length > 0 &&
+      state.messages[state.messages.length - 1] === action.value
+    ) {
+      return state;
+    }
     return { ...state, messages: [...state.messages, action.value] };
   }
   return state;
