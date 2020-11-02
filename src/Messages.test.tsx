@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import RealApp, { App } from './Messages';
+import { Messages } from './Messages';
 
-describe('[unit] test App.tsx', () => {
+describe('[unit] test Messages.tsx', () => {
   test('renders learn react link', () => {
-    const { getByText, queryByText } = render(<App />);
+    const { getByText, queryByText } = render(<Messages />);
     const linkElement = getByText(/This is Chatty chat!/i);
     expect(linkElement).toBeInTheDocument();
 
@@ -13,14 +13,14 @@ describe('[unit] test App.tsx', () => {
   });
 
   test('displays messages', () => {
-    const { getByText } = render(<App messages={['hello']} />);
+    const { getByText } = render(<Messages messages={['hello']} />);
     const message = getByText(/hello/);
     expect(message).toBeInTheDocument();
   });
 
   test('filters duplicate messages', () => {
     const { queryAllByText } = render(
-      <App messages={['hello', 'world', 'world', 'hello']} />,
+      <Messages messages={['hello', 'world', 'world', 'hello']} />,
     );
 
     // expected: hello, world, hello

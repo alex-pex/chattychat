@@ -3,12 +3,13 @@ import './Messages.css';
 import { connect } from 'react-redux';
 import type { RootState } from './store';
 
-interface AppProps {
+interface MessagesProps {
   messages?: string[];
-  postMessage: (v: string) => void;
+  postMessage?: (v: string) => void;
 }
 
-export function App({ messages = [], postMessage }: AppProps) {
+const noop = () => {};
+export function Messages({ messages = [], postMessage = noop }: MessagesProps) {
   const [newMessage, setNewMessage] = useState('');
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,4 +60,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   postMessage: (value: string) => dispatch({ type: 'POST_MESSAGE', value }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);
