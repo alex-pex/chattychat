@@ -14,12 +14,17 @@ export function App({ messages = [] }: AppProps) {
     alert('submit!');
   };
 
+  const filteredMessages = messages.reduce((acc, msg) => {
+    if (acc.length > 0 && acc[acc.length - 1] === msg) return acc;
+    return [...acc, msg];
+  }, [] as typeof messages);
+
   return (
     <div className="App">
       <h2>This is Chatty chat!</h2>
 
       <ul className="Message-list">
-        {messages.map((msg, i) => (
+        {filteredMessages.map((msg, i) => (
           <li key={i} className="Message-item">
             <span className="Message-author">Message</span> {msg}
           </li>
