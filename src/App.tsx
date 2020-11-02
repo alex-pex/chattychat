@@ -1,10 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux';
+import type { RootState } from './store';
 
-interface AppProps {}
+interface AppProps {
+  messages?: string[];
+}
 
-function App({}: AppProps) {
+export function App({ messages = [] }: AppProps) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert('submit!');
@@ -13,10 +17,13 @@ function App({}: AppProps) {
   return (
     <div className="App">
       <h2>This is Chatty chat!</h2>
+
       <ul className="Message-list">
-        <li className="Message-item">
-          <span className="Message-author">Bot</span> Welcome!
-        </li>
+        {messages.map((msg, i) => (
+          <li key={i} className="Message-item">
+            <span className="Message-author">Message</span> {msg}
+          </li>
+        ))}
       </ul>
       <form className="Message-form" onSubmit={onSubmit}>
         <input
@@ -34,4 +41,8 @@ function App({}: AppProps) {
   );
 }
 
-export default App;
+const mapStateToProps = (state: RootState) => ({
+  messages: state.messages,
+});
+
+export default connect(mapStateToProps)(App);
