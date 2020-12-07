@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Messages } from './Messages';
 
 describe('[unit] test Messages.tsx', () => {
@@ -28,5 +28,23 @@ describe('[unit] test Messages.tsx', () => {
     const worldMsgs = queryAllByText(/world/);
     expect(helloMsgs.length).toBe(2);
     expect(worldMsgs.length).toBe(1);
+  });
+
+  test('calls postMessage function', () => {
+    const postMessage = jest.fn();
+
+    const screen = render(
+      <Messages messages={['hello']} postMessage={postMessage} />,
+    );
+    const input = screen.getByPlaceholderText(
+      'Type your message',
+    ) as HTMLInputElement;
+    const button = screen.getByText('Send');
+
+    fireEvent.change(input, { target: { value: 'my message' } });
+    fireEvent.click(button);
+
+    // assert postMessage is called once, with "my message"
+    expect(postMessage).toHaveBeenCalledWith('my message');
   });
 });

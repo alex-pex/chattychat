@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, cleanup } from '@testing-library/react';
+import { fireEvent, render, cleanup, waitFor } from '@testing-library/react';
 import App from './App';
 import store from './store';
 
@@ -26,8 +26,6 @@ describe('[functional] test the real app', () => {
 
   test('It filters duplicate message', () => {
     const screen = render(<App />);
-    screen.getByText(/This is Chatty chat!/i);
-
     const input = screen.getByPlaceholderText(
       'Type your message',
     ) as HTMLInputElement;
@@ -46,5 +44,19 @@ describe('[functional] test the real app', () => {
 
     expect(screen.queryAllByText('hello').length).toBe(2);
     expect(screen.queryAllByText('world').length).toBe(1);
+  });
+
+  test('It answers to ping messages', async () => {
+    const screen = render(<App />);
+    const input = screen.getByPlaceholderText(
+      'Type your message',
+    ) as HTMLInputElement;
+    const button = screen.getByText('Send');
+
+    fireEvent.change(input, { target: { value: 'ping' } });
+    fireEvent.click(button);
+
+    await screen.findByText('pong');
+    expect(screen.getByText('pong')).toBeInTheDocument();
   });
 });

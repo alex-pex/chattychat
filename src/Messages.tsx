@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Messages.css';
 import { connect } from 'react-redux';
 import type { RootState } from './store';
@@ -17,6 +17,14 @@ export function Messages({ messages = [], postMessage = noop }: MessagesProps) {
     postMessage(newMessage);
     setNewMessage('');
   };
+
+  useEffect(() => {
+    if (messages[messages.length - 1] === 'ping') {
+      setTimeout(() => {
+        postMessage('pong');
+      }, 500);
+    }
+  }, [messages]);
 
   return (
     <div className="App">
