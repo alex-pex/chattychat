@@ -49,8 +49,6 @@ export function App({ messages = [], sendMessage }: AppProps) {
   );
 }
 
-const mapStateToProps = (state: RootState) => ({
+export default connect((state) => ({
   messages: state.messages,
-});
-
-export default connect(mapStateToProps)(App);
+}))(App);
