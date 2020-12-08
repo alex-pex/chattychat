@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import type { RootState } from './store';
 
 interface AppProps {
-  messages?: string[];
+  messages: RootState['messages'];
+  sendMessage: (text: string) => void;
 }
 
-export function App({ messages = [] }: AppProps) {
+export function App({ messages = [], sendMessage }: AppProps) {
+  const [text, setText] = useState('');
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    alert('submit!');
+    sendMessage(text);
+    setText('');
   };
 
   return (
@@ -20,7 +23,7 @@ export function App({ messages = [] }: AppProps) {
       <ul className="Message-list">
         {messages.map((msg, i) => (
           <li key={i} className="Message-item">
-            <span className="Message-author">Message</span> {msg}
+            <span className="Message-author">{msg.username}</span> {msg.message}
           </li>
         ))}
       </ul>
@@ -31,8 +34,14 @@ export function App({ messages = [] }: AppProps) {
           name="newMessage"
           placeholder="Type your message"
           autoFocus
+          value={text}
+          onChange={(event) => setText(event.target.value)}
         />
-        <button className="Message-submit-button" type="submit">
+        <button
+          className="Message-submit-button"
+          type="submit"
+          disabled={!text}
+        >
           Send
         </button>
       </form>
