@@ -22,6 +22,16 @@ socket.on('new message', (data: { username: string; message: string }) => {
   });
 });
 
+// Whenever the server emits 'login', 'user joined' or 'user left'
+// update the user count
+const updateUsersCount = (data: { numUsers: number }) => {
+  store.dispatch({ type: 'SET_USERS_COUNT', value: data.numUsers });
+};
+
+socket.on('login', updateUsersCount);
+socket.on('user joined', updateUsersCount);
+socket.on('user left', updateUsersCount);
+
 const sendMessage = (message: string) => {
   store.dispatch({
     type: 'POST_MESSAGE',
@@ -33,7 +43,11 @@ const sendMessage = (message: string) => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App sendMessage={sendMessage} />
+      <App
+        usersCount={store.getState().usersCount}
+        messages={store.getState().messages}
+        sendMessage={sendMessage}
+      />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
-import { connect } from 'react-redux';
-import type { RootState } from './store';
 
 interface AppProps {
-  messages: RootState['messages'];
+  usersCount: number;
+  messages: Array<{ username: string; message: string }>;
   sendMessage: (text: string) => void;
 }
 
-export function App({ messages = [], sendMessage }: AppProps) {
+export function App({ usersCount, messages, sendMessage }: AppProps) {
   const [text, setText] = useState('');
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,6 +18,7 @@ export function App({ messages = [], sendMessage }: AppProps) {
   return (
     <div className="App">
       <h2>This is Chatty chat!</h2>
+      <h3>{usersCount} users are in!</h3>
 
       <ul className="Message-list">
         {messages.map((msg, i) => (
@@ -49,6 +49,4 @@ export function App({ messages = [], sendMessage }: AppProps) {
   );
 }
 
-export default connect((state) => ({
-  messages: state.messages,
-}))(App);
+export default App;
